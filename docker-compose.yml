@@ -1,0 +1,9 @@
+version: "3.6"
+services:
+    node_app_ts:
+        image: node_app_ts
+        restart: always
+        ports:
+            - 3001:3000
+        volumes:
+            - ./app01:/home/node/app
