@@ -1,12 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FiArrowLeft } from 'react-icons/fi';
 import { Map, TileLayer, Marker } from 'react-leaflet';
 import { Link } from 'react-router-dom';
+import api from '../../services/api';
 
 import './styles.css';
 import logo from '../../assets/logo.svg'; 
 
 const CreateLocation: React.FC = () => {
+
+    useEffect(() => {
+        api.get('todos?_limit=10')
+        .then(response => {
+            console.log(response);
+        });
+    }, []);
+
     return (
         <div id="page-create-location">
             <div className="content">
