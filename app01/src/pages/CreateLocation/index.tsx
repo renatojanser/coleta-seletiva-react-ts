@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { FiArrowLeft } from 'react-icons/fi';
 import { Map, TileLayer, Marker } from 'react-leaflet';
 import { LeafletMouseEvent } from 'leaflet';
@@ -47,7 +47,37 @@ const CreateLocation: React.FC = () => {
     }
 
     function handleSelectItem(id: number) {
-        setSeletedItems([ ...selectedItems, id ]);
+        const alreadySelected = selectedItems.findIndex(item => item === id);
+
+        if(alreadySelected >= 0){
+            const filteredItems = selectedItems.filter(item => item !== id);
+            setSeletedItems(filteredItems);
+        } else {
+            setSeletedItems([ ...selectedItems, id ]);
+        }
+    }
+
+    // async function handleSubmit(event: FormEvent) {
+    function handleSubmit(event: FormEvent) {
+        event.preventDefault();
+
+        const {city,email,name,uf,whatsapp} = formData;
+        const [latitude, longitude] = selectedMapPosition;
+        const items = selectedItems;
+
+        const data = {
+            city,
+            email,
+            name,
+            uf,
+            whatsapp,
+            latitude, 
+            longitude,
+            items
+        };
+
+        // await api.post('locations', data);
+        console.log(data);
     }
 
     return (
@@ -60,7 +90,7 @@ const CreateLocation: React.FC = () => {
                         Voltar para home
                     </Link>
                 </header>
-                <form>
+                <form onSubmit={handleSubmit}>
                     <h1>Cadastro do <br /> local de coleta</h1>
 
                     <fieldset>
@@ -87,7 +117,7 @@ const CreateLocation: React.FC = () => {
                                 />
                             </div>
                             <div className="field">
-                                <label htmlFor="whatsapp">E-mail</label>
+                                <label htmlFor="whatsapp">Whatsapp</label>
                                 <input 
                                     type="text" 
                                     name="whatsapp"
