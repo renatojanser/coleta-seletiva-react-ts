@@ -1,7 +1,7 @@
 version: "3.6"
 services:
-    node_app_ts:
-        image: node_app_ts
+    coleta_seletiva:
+        image: renatojanser/node_app
         restart: always
         ports:
             - 3001:3000
